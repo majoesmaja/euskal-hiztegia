@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Euskal hiztegia</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>
+    <img src="images/lauburu.svg" alt="lauburu" class="lauburu-icon">
+    <span class="euskal">Euskal</span> <span class="hiztegia">hiztegia</span>
+    <img src="images/lauburu.svg" alt="lauburu" class="lauburu-icon">
+  </h1>
+
+  <div id="form">
+    <input type="text" id="word" placeholder="Euskera">
+    <input type="text" id="translation" placeholder="Valencià">
+    <button id="add">Afegir</button>
+  </div>
+
+  <div id="cards-container"></div>
+
+  <div class="navigation">
+    <button id="prev">⬅️ Anterior</button>
+    <span id="counter"></span>
+    <button id="next">Següent ➡️</button>
+  </div>
+  <button id="shuffle-btn">🔀 Nou examen</button>
+
+  <div class="bottom-controls">
+    <button id="edit-mode">✏️ Editar</button>
+  </div>
+
+  <!-- Firebase: carregar com type=module i exposar a window -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      getDocs,
+      deleteDoc,
+      doc
+    } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWNaiLyK_hIOcL_bz7Zg0PJ6ySJX_-AEo",
+      authDomain: "euskal-hiztegia-app.firebaseapp.com",
+      projectId: "euskal-hiztegia-app",
+      storageBucket: "euskal-hiztegia-app.firebasestorage.app",
+      messagingSenderId: "676572190223",
+      appId: "1:676572190223:web:4fb7c8af26393f387c357a",
+      measurementId: "G-KVQQK1L1M5"
+    };
+
+    // Inicialitzar Firebase i Firestore
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Exposem al window per al script no-mòdul
+    window._firebaseReady = true;
+    window.db = db;
+    window.firestoreFns = { collection, addDoc, getDocs, deleteDoc, doc };
+    console.log("Firebase inicialitzat i exposat a window.db");
+  </script>
+
+  <!-- script de l'aplicació: NO type=module (es pot carregar com a normal script) -->
+  <script src="script.js"></script>
+</body>
+</html>
