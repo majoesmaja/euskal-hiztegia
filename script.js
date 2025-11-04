@@ -184,6 +184,35 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndex = 0;
     renderCards();
   });
+  // 🔍 CERCA
+const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
+const clearSearch = document.getElementById("clear-search");
+
+searchBtn.addEventListener("click", () => {
+  const term = searchInput.value.trim().toLowerCase();
+  if (!term) return renderCards(); // si no hi ha text, mostra tot
+  const foundIndex = cards.findIndex(c =>
+    c.word.toLowerCase().includes(term) ||
+    c.translation.toLowerCase().includes(term)
+  );
+  if (foundIndex === -1) {
+    alert("No s'ha trobat cap paraula que coincidisca.");
+    return;
+  }
+  currentIndex = foundIndex;
+  renderCards();
+});
+
+clearSearch.addEventListener("click", () => {
+  searchInput.value = "";
+  renderCards();
+});
+
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") searchBtn.click();
+});
+
 
   // ---------- Utilitats ----------
   function escapeHtml(s) {
